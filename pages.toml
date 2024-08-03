@@ -1,0 +1,14 @@
+[[pages]]
+path = "pages/1_Setup.py"
+name = "Setup Page"
+icon = "⚙️"
+
+[[pages]]
+path = "pages/2_Market Overview.py"
+name = "Market Overview"
+icon = "🌎"
+
+[[pages]]
+path = "pages/3_Google.py"
+name = "Google"
+icon = "🔍"
