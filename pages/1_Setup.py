@@ -7,6 +7,35 @@ import warnings
 warnings.filterwarnings('ignore')
 pd.set_option('display.max_rows', None)
 
+import hmac
+
+def check_password():
+    """Returns `True` if the user had the correct password."""
+
+    def password_entered():
+        """Checks whether a password entered by the user is correct."""
+        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
+            st.session_state["password_correct"] = True
+            del st.session_state["password"]  # Don't store the password.
+        else:
+            st.session_state["password_correct"] = False
+
+    # Return True if the password is validated.
+    if st.session_state.get("password_correct", False):
+        return True
+
+    # Show input for password.
+    st.text_input(
+        "Password", type="password", on_change=password_entered, key="password"
+    )
+    if "password_correct" in st.session_state:
+        st.error("😕 Password incorrect")
+    return False
+
+
+if not check_password():
+    st.stop()  # Do not continue if check_password is not True.
+
 if "df" not in st.session_state:
     st.session_state.df = None
 
@@ -113,6 +142,9 @@ l_ed = str(st.session_state.l_ed)
 t_week_q = "date <= '" + t_ed + "' & date >= '" + t_sd + "'"
 l_week_q = "date <= '" + l_ed + "' & date >= '" + l_sd + "'"
 # l_week_q = "date <= {l_ed} & date >= {l_sd}"
+
+st.session_state.t_week_q = t_week_q
+st.session_state.l_week_q = l_week_q
 
 tw_ovr_df = df.query(t_week_q)
 lw_ovr_df = df.query(l_week_q)

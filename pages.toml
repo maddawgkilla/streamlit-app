@@ -12,3 +12,23 @@ icon = "🌎"
 path = "pages/3_Google.py"
 name = "Google"
 icon = "🔍"
+
+[[pages]]
+path = "pages/4_PMAX.py"
+name = "PMAX Categeory Analysis"
+icon = "🔍"
+
+[[pages]]
+path = "pages/5_Meta.py"
+name = "Meta"
+icon = "🙋‍♂️"
+
+[[pages]]
+path = "pages/6_Tiktok.py"
+name = "Tiktok"
+icon = "📹"
+
+[[pages]]
+path = "pages/7_Snapchat.py"
+name = "Snapchat"
+icon = "📷"
