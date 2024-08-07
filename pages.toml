@@ -32,3 +32,11 @@ icon = "📹"
 path = "pages/7_Snapchat.py"
 name = "Snapchat"
 icon = "📷"
+
+[[pages]]
+path = "pages/8_bts reports.py"
+name = "BTS Reports"
+
+[[pages]]
+path = "pages/9_test reports.py"
+name = "Test Reports"
