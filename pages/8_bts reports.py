@@ -85,6 +85,7 @@ ae['CPM'] = (ae['Costs']/ae['Ad_impressions'])*1000
 ae['CTR'] = (ae['Ad_clicks']/ae['Ad_impressions'])
 ae['CTS'] = (ae['Sessions']/ae['Ad_clicks'])
 ae['CVR'] = (ae['Orders']/ae['Sessions'])
+ae = ae.query("Costs > 0")
 
 st.write(ae.head(40))
 
@@ -99,6 +100,8 @@ sa['CPM'] = (sa['Costs']/sa['Ad_impressions'])*1000
 sa['CTR'] = (sa['Ad_clicks']/sa['Ad_impressions'])
 sa['CTS'] = (sa['Sessions']/sa['Ad_clicks'])
 sa['CVR'] = (sa['Orders']/sa['Sessions'])
+sa = sa.query("Costs > 0")
+
 
 st.write(sa.head(40))
 
