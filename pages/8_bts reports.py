@@ -48,6 +48,7 @@ bts = df[df['campaign'].str.contains('bts')]
 # st.write(bts.head())
 
 ovr = bts.groupby(["country", "channel_group", "channel"])[["Sessions", "Costs", "gmv", "Orders", "Ad_clicks", "Ad_impressions", "Revenue"]].sum()
+ovr = ovr.query("channel == 'sd' | channel == 'shp' | channel == 'webtraffic' | channel == 'traffic'").query("country  == 'SA' | country == 'AE'")
 ovr = ovr[ovr["Costs"] != 0]
 ovr['CIR'] = 1/(ovr['Revenue']/ovr['Costs'])
 ovr['CPC'] = (ovr['Costs']/ovr['Ad_clicks'])
@@ -57,7 +58,7 @@ ovr['CTR'] = (ovr['Ad_clicks']/ovr['Ad_impressions'])
 ovr['CTS'] = (ovr['Sessions']/ovr['Ad_clicks'])
 ovr['CVR'] = (ovr['Orders']/ovr['Sessions'])
 
-st.write(ovr.head(10))
+st.write(ovr.head(40))
 
 
 st.markdown("## Google Shopping")
@@ -85,7 +86,7 @@ ae['CTR'] = (ae['Ad_clicks']/ae['Ad_impressions'])
 ae['CTS'] = (ae['Sessions']/ae['Ad_clicks'])
 ae['CVR'] = (ae['Orders']/ae['Sessions'])
 
-st.write(ae.head(30))
+st.write(ae.head(40))
 
 st.markdown("### SA")
 
@@ -99,7 +100,7 @@ sa['CTR'] = (sa['Ad_clicks']/sa['Ad_impressions'])
 sa['CTS'] = (sa['Sessions']/sa['Ad_clicks'])
 sa['CVR'] = (sa['Orders']/sa['Sessions'])
 
-st.write(sa.head(30))
+st.write(sa.head(40))
 
 st.markdown("## SD Report")
 
@@ -117,3 +118,24 @@ spends = bts.query("channel == 'asc' | channel == 'sd' | channel == 'shp' | chan
 pivot_table = spends.pivot_table(index=['country', 'channel'], columns='date', values=['Costs'], aggfunc='sum')
 
 st.write(pivot_table.head(30))
+
+
+st.markdown("## Shopping spends by date")
+
+st.markdown("### AE SHP by date")
+
+spends = shp.query("country == 'AE'")
+pivot_table = spends.pivot_table(index=['category'], columns='date', values=['Costs'], aggfunc='sum')
+pivot_table.fillna('-', inplace=True)
+# filtered_pivot = pivot_table.query('Costs.sum(axis=1) != 0')
+# wsum = pivot_table.sum(axis=1)
+# st.write(type(wsum))
+# pivot_table = pivot_table[wsum != 0]
+st.write(pivot_table.head(100))
+
+st.markdown("### SA SHP by date")
+
+spends = shp.query("country == 'SA'")
+pivot_table = spends.pivot_table(index=['category'], columns='date', values=['Costs'], aggfunc='sum')
+pivot_table.fillna('-', inplace=True)
+st.write(pivot_table.head(100))
