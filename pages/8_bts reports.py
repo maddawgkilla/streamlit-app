@@ -48,7 +48,7 @@ bts = df[df['campaign'].str.contains('bts')]
 # st.write(bts.head())
 
 ovr = bts.groupby(["country", "channel_group", "channel"])[["Sessions", "Costs", "gmv", "Orders", "Ad_clicks", "Ad_impressions", "Revenue"]].sum()
-ovr = ovr.query("channel == 'sd' | channel == 'shp' | channel == 'webtraffic' | channel == 'traffic'").query("country  == 'SA' | country == 'AE'")
+ovr = ovr.query("channel == 'sd' | channel == 'shp' | channel == 'asc' | channel == 'webtraffic' | channel == 'traffic'").query("country  == 'SA' | country == 'AE'")
 ovr = ovr[ovr["Costs"] != 0]
 ovr['CIR'] = 1/(ovr['Revenue']/ovr['Costs'])
 ovr['CPC'] = (ovr['Costs']/ovr['Ad_clicks'])
