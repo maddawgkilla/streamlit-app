@@ -50,7 +50,7 @@ bts = df[df['campaign'].str.contains('bts')]
 ovr = bts.groupby(["country", "channel_group", "channel"])[["Sessions", "Costs", "gmv", "Orders", "Ad_clicks", "Ad_impressions"]].sum()
 ovr = ovr.query("channel == 'sd' | channel == 'shp' | channel == 'asc' | channel == 'webtraffic' | channel == 'traffic'").query("country  == 'SA' | country == 'AE'")
 ovr = ovr[ovr["Costs"] != 0]
-ovr['CIR'] = 1/(ovr['Revenue']/ovr['Costs'])
+ovr['CIR'] = 1/(ovr['gmv']/ovr['Costs'])
 ovr['CPC'] = (ovr['Costs']/ovr['Ad_clicks'])
 ovr['CPS'] = (ovr['Costs']/ovr['Sessions'])
 ovr['CPM'] = (ovr['Costs']/ovr['Ad_impressions'])*1000
@@ -78,7 +78,7 @@ shp['category'] = shp['campaign'].apply(extract_cat)
 
 ae = shp.query("country == 'AE'")
 ae = ae.groupby("category")[["Sessions", "Costs", "gmv", "Orders", "Ad_clicks", "Ad_impressions"]].sum()
-ae['CIR'] = 1/(ae['Revenue']/ae['Costs'])
+ae['CIR'] = 1/(ae['gmv']/ae['Costs'])
 ae['CPC'] = (ae['Costs']/ae['Ad_clicks'])
 ae['CPS'] = (ae['Costs']/ae['Sessions'])
 ae['CPM'] = (ae['Costs']/ae['Ad_impressions'])*1000
@@ -93,7 +93,7 @@ st.markdown("### SA")
 
 sa = shp.query("country == 'SA'")
 sa = sa.groupby("category")[["Sessions", "Costs", "gmv", "Orders", "Ad_clicks", "Ad_impressions"]].sum()
-sa['CIR'] = 1/(sa['Revenue']/sa['Costs'])
+sa['CIR'] = 1/(sa['gmv']/sa['Costs'])
 sa['CPC'] = (sa['Costs']/sa['Ad_clicks'])
 sa['CPS'] = (sa['Costs']/sa['Sessions'])
 sa['CPM'] = (sa['Costs']/sa['Ad_impressions'])*1000
