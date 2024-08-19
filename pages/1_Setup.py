@@ -101,7 +101,7 @@ def extract_cat(text):
     else:
         return None
 
-df.loc[df['id'].isin(['d1347', 'd1348', 'd1428', 'd1429', 'd1666', 'd1617']), 'channel'] = 'webtraffic'
+df.loc[df['id'].isin(['d1347', 'd1348', 'd1428', 'd1429', 'd1666', 'd1617', 'd1641', 'd1642', 'd1579', 'd1578', 'd1731']), 'channel'] = 'webtraffic'
 
 df['category'] = df['campaign'].apply(extract_cat)
 df['lang'] = df['campaign'].apply(extract_lang)

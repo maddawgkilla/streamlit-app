@@ -101,7 +101,7 @@ tw_df['CVR'] = (tw_df['Orders']/tw_df['Sessions'])
 
 st.write(tw_df.head(15))
 
-st.markdown("### SA Categories Prior week")
+st.markdown("### AE Categories Prior week")
 
 lw_df = pmax_df.query(l_week_q).query("country == 'AE' & category != 'all'")
 lw_df = lw_df.groupby('category')[['Sessions', 'Costs', 'Revenue', 'Orders', 'Ad_clicks', 'Ad_impressions']].sum()
