@@ -40,3 +40,7 @@ name = "BTS Reports"
 [[pages]]
 path = "pages/9_test reports.py"
 name = "Test Reports"
+
+[[pages]]
+path = "pages/10_api.py"
+name = "API"
