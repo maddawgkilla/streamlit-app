@@ -51,7 +51,13 @@ if 'l_week_q' not in st.session_state:
 else:
     l_week_q = st.session_state.l_week_q
 
+
 snap_df = df.query("channel_group == 'snap'")
+snap_df.loc[snap_df['campaign'].str.contains('dpa_rmk', case=False, na=False), 'channel'] = 'dpa-rmk'
+snap_df.loc[snap_df['campaign'].str.contains('dpa_acq', case=False, na=False), 'channel'] = 'dpa-acq'
+snap_df.loc[snap_df['campaign'].str.contains('dpa_open_webtraffic', case=False, na=False), 'channel'] = 'webtraffic'
+snap_df.loc[snap_df['campaign'].str.contains('dpa_open_apptraffic', case=False, na=False), 'channel'] = 'apptraffic'
+
 snap_df = snap_df.groupby(['channel', 'date'])[['Sessions', 'Costs', 'Revenue', 'Orders', 'Ad_clicks', 'Ad_impressions']].sum()
 snap_df.reset_index()
 tw_snap_df = snap_df.query(t_week_q)
@@ -81,8 +87,8 @@ lw_snap_df = lw_snap_df.reset_index()
 tw_snap_df.set_index('channel', inplace=True)
 lw_snap_df.set_index('channel', inplace=True)
 
-tw_snap_df = tw_snap_df.query("channel == 'appconv' | channel == 'appengage' | channel == 'dpa' | channel == 'webconv' | channel == 'api' | channel == 'traffic'")
-lw_snap_df = lw_snap_df.query("channel == 'appconv' | channel == 'appengage' | channel == 'dpa' | channel == 'webconv' | channel == 'api' | channel == 'traffic'")
+tw_snap_df = tw_snap_df.query("channel == 'appconv' | channel == 'appengage' | channel == 'dpa-rmk' | channel == 'webconv' | channel == 'api' | channel == 'webtraffic' | channel == 'apptraffic' | channel == 'dpa-acq'")
+lw_snap_df = lw_snap_df.query("channel == 'appconv' | channel == 'appengage' | channel == 'dpa-rmk' | channel == 'webconv' | channel == 'api' | channel == 'webtraffic' | channel == 'apptraffic' | channel == 'dpa-acq'")
 
 
 st.write(tw_snap_df.head(10))
@@ -91,6 +97,10 @@ st.write(tw_snap_df.head(10))
 ## Reinit of the main snap df
 
 snap_df = df.query("channel_group == 'snap'")
+snap_df.loc[snap_df['campaign'].str.contains('dpa_rmk', case=False, na=False), 'channel'] = 'dpa-rmk'
+snap_df.loc[snap_df['campaign'].str.contains('dpa_acq', case=False, na=False), 'channel'] = 'dpa-acq'
+snap_df.loc[snap_df['campaign'].str.contains('dpa_open_webtraffic', case=False, na=False), 'channel'] = 'webtraffic'
+snap_df.loc[snap_df['campaign'].str.contains('dpa_open_apptraffic', case=False, na=False), 'channel'] = 'apptraffic'
 
 st.markdown("### SA Snapchat This Week")
 
@@ -105,7 +115,7 @@ tw_snap_df['CTR'] = (tw_snap_df['Ad_clicks']/tw_snap_df['Ad_impressions'])
 tw_snap_df['CTS'] = (tw_snap_df['Sessions']/tw_snap_df['Ad_clicks'])
 tw_snap_df['CVR'] = (tw_snap_df['Orders']/tw_snap_df['Sessions'])
 
-tw_snap_df = tw_snap_df.query("channel == 'api' | channel == 'dpa' | channel == 'traffic'")
+tw_snap_df = tw_snap_df.query("channel == 'api' | channel == 'dpa-rmk' | channel == 'dpa-acq' | channel == 'webtraffic' | channel == 'apptraffic'")
 
 st.write(tw_snap_df.replace([np.inf, np.nan], '-').head())
 
@@ -122,7 +132,7 @@ lw_snap_df['CTR'] = (lw_snap_df['Ad_clicks']/lw_snap_df['Ad_impressions'])
 lw_snap_df['CTS'] = (lw_snap_df['Sessions']/lw_snap_df['Ad_clicks'])
 lw_snap_df['CVR'] = (lw_snap_df['Orders']/lw_snap_df['Sessions'])
 
-lw_snap_df = lw_snap_df.query("channel == 'api' | channel == 'dpa' | channel == 'traffic'")
+lw_snap_df = lw_snap_df.query("channel == 'api' | channel == 'dpa-rmk' | channel == 'dpa-acq' | channel == 'webtraffic' | channel == 'apptraffic'")
 
 st.write(lw_snap_df.replace([np.inf, np.nan], '-').head())
 
@@ -146,7 +156,7 @@ tw_snap_df['CTR'] = (tw_snap_df['Ad_clicks']/tw_snap_df['Ad_impressions'])
 tw_snap_df['CTS'] = (tw_snap_df['Sessions']/tw_snap_df['Ad_clicks'])
 tw_snap_df['CVR'] = (tw_snap_df['Orders']/tw_snap_df['Sessions'])
 
-tw_snap_df = tw_snap_df.query("channel == 'api' | channel == 'dpa' | channel == 'traffic'")
+tw_snap_df = tw_snap_df.query("channel == 'api' | channel == 'dpa-rmk' | channel == 'dpa-acq' | channel == 'webtraffic' | channel == 'apptraffic'")
 
 st.write(tw_snap_df.replace([np.inf, np.nan], '-').head())
 
@@ -163,7 +173,7 @@ lw_snap_df['CTR'] = (lw_snap_df['Ad_clicks']/lw_snap_df['Ad_impressions'])
 lw_snap_df['CTS'] = (lw_snap_df['Sessions']/lw_snap_df['Ad_clicks'])
 lw_snap_df['CVR'] = (lw_snap_df['Orders']/lw_snap_df['Sessions'])
 
-lw_snap_df = lw_snap_df.query("channel == 'api' | channel == 'dpa' | channel == 'traffic'")
+lw_snap_df = lw_snap_df.query("channel == 'api' | channel == 'dpa-rmk' | channel == 'dpa-acq' | channel == 'webtraffic' | channel == 'apptraffic'")
 
 st.write(lw_snap_df.replace([np.inf, np.nan], '-').head())
 
