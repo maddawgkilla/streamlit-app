@@ -43,6 +43,7 @@ file = st.file_uploader("Upload CSV", type=["csv"])
 
 if file is not None:
     df = pd.read_csv(file, thousands = ',')
+    df = df.query("strategy == 'perf'")
     st.session_state.df = df
     st.success("CSV uploaded successfully!")
 

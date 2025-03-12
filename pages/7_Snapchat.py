@@ -81,8 +81,93 @@ lw_snap_df = lw_snap_df.reset_index()
 tw_snap_df.set_index('channel', inplace=True)
 lw_snap_df.set_index('channel', inplace=True)
 
-tw_snap_df = tw_snap_df.query("channel == 'appconv' | channel == 'appengage' | channel == 'dpa' | channel == 'webconv' | channel == 'api'")
-lw_snap_df = lw_snap_df.query("channel == 'appconv' | channel == 'appengage' | channel == 'dpa' | channel == 'webconv' | channel == 'api'")
+tw_snap_df = tw_snap_df.query("channel == 'appconv' | channel == 'appengage' | channel == 'dpa' | channel == 'webconv' | channel == 'api' | channel == 'traffic'")
+lw_snap_df = lw_snap_df.query("channel == 'appconv' | channel == 'appengage' | channel == 'dpa' | channel == 'webconv' | channel == 'api' | channel == 'traffic'")
 
 
 st.write(tw_snap_df.head(10))
+
+
+## Reinit of the main snap df
+
+snap_df = df.query("channel_group == 'snap'")
+
+st.markdown("### SA Snapchat This Week")
+
+tw_snap_df = snap_df.query(t_week_q).query("country == 'SA'")
+
+tw_snap_df = tw_snap_df.groupby('channel')[['Sessions', 'Costs', 'Revenue', 'Orders', 'Ad_clicks', 'Ad_impressions']].sum()
+tw_snap_df['CIR'] = 1/(tw_snap_df['Revenue']/tw_snap_df['Costs'])
+tw_snap_df['CPC'] = (tw_snap_df['Costs']/tw_snap_df['Ad_clicks'])
+tw_snap_df['CPS'] = (tw_snap_df['Costs']/tw_snap_df['Sessions'])
+tw_snap_df['CPM'] = (tw_snap_df['Costs']/tw_snap_df['Ad_impressions']) * 1000
+tw_snap_df['CTR'] = (tw_snap_df['Ad_clicks']/tw_snap_df['Ad_impressions'])
+tw_snap_df['CTS'] = (tw_snap_df['Sessions']/tw_snap_df['Ad_clicks'])
+tw_snap_df['CVR'] = (tw_snap_df['Orders']/tw_snap_df['Sessions'])
+
+tw_snap_df = tw_snap_df.query("channel == 'api' | channel == 'dpa' | channel == 'traffic'")
+
+st.write(tw_snap_df.replace([np.inf, np.nan], '-').head())
+
+st.markdown("### SA Snapchat Prior Week")
+
+lw_snap_df = snap_df.query(l_week_q).query("country == 'SA'")
+
+lw_snap_df = lw_snap_df.groupby('channel')[['Sessions', 'Costs', 'Revenue', 'Orders', 'Ad_clicks', 'Ad_impressions']].sum()
+lw_snap_df['CIR'] = 1/(lw_snap_df['Revenue']/lw_snap_df['Costs'])
+lw_snap_df['CPC'] = (lw_snap_df['Costs']/lw_snap_df['Ad_clicks'])
+lw_snap_df['CPS'] = (lw_snap_df['Costs']/lw_snap_df['Sessions'])
+lw_snap_df['CPM'] = (lw_snap_df['Costs']/lw_snap_df['Ad_impressions']) * 1000
+lw_snap_df['CTR'] = (lw_snap_df['Ad_clicks']/lw_snap_df['Ad_impressions'])
+lw_snap_df['CTS'] = (lw_snap_df['Sessions']/lw_snap_df['Ad_clicks'])
+lw_snap_df['CVR'] = (lw_snap_df['Orders']/lw_snap_df['Sessions'])
+
+lw_snap_df = lw_snap_df.query("channel == 'api' | channel == 'dpa' | channel == 'traffic'")
+
+st.write(lw_snap_df.replace([np.inf, np.nan], '-').head())
+
+st.markdown("### SA Snapchat WoW")
+
+dif = ((tw_snap_df - lw_snap_df)/lw_snap_df)
+st.write(dif.replace([np.inf, np.nan], '-').head(6))
+
+
+
+st.markdown("### AE Snapchat This Week")
+
+tw_snap_df = snap_df.query(t_week_q).query("country == 'AE'")
+
+tw_snap_df = tw_snap_df.groupby('channel')[['Sessions', 'Costs', 'Revenue', 'Orders', 'Ad_clicks', 'Ad_impressions']].sum()
+tw_snap_df['CIR'] = 1/(tw_snap_df['Revenue']/tw_snap_df['Costs'])
+tw_snap_df['CPC'] = (tw_snap_df['Costs']/tw_snap_df['Ad_clicks'])
+tw_snap_df['CPS'] = (tw_snap_df['Costs']/tw_snap_df['Sessions'])
+tw_snap_df['CPM'] = (tw_snap_df['Costs']/tw_snap_df['Ad_impressions']) * 1000
+tw_snap_df['CTR'] = (tw_snap_df['Ad_clicks']/tw_snap_df['Ad_impressions'])
+tw_snap_df['CTS'] = (tw_snap_df['Sessions']/tw_snap_df['Ad_clicks'])
+tw_snap_df['CVR'] = (tw_snap_df['Orders']/tw_snap_df['Sessions'])
+
+tw_snap_df = tw_snap_df.query("channel == 'api' | channel == 'dpa' | channel == 'traffic'")
+
+st.write(tw_snap_df.replace([np.inf, np.nan], '-').head())
+
+st.markdown("### AE Snapchat Prior Week")
+
+lw_snap_df = snap_df.query(l_week_q).query("country == 'AE'")
+
+lw_snap_df = lw_snap_df.groupby('channel')[['Sessions', 'Costs', 'Revenue', 'Orders', 'Ad_clicks', 'Ad_impressions']].sum()
+lw_snap_df['CIR'] = 1/(lw_snap_df['Revenue']/lw_snap_df['Costs'])
+lw_snap_df['CPC'] = (lw_snap_df['Costs']/lw_snap_df['Ad_clicks'])
+lw_snap_df['CPS'] = (lw_snap_df['Costs']/lw_snap_df['Sessions'])
+lw_snap_df['CPM'] = (lw_snap_df['Costs']/lw_snap_df['Ad_impressions']) * 1000
+lw_snap_df['CTR'] = (lw_snap_df['Ad_clicks']/lw_snap_df['Ad_impressions'])
+lw_snap_df['CTS'] = (lw_snap_df['Sessions']/lw_snap_df['Ad_clicks'])
+lw_snap_df['CVR'] = (lw_snap_df['Orders']/lw_snap_df['Sessions'])
+
+lw_snap_df = lw_snap_df.query("channel == 'api' | channel == 'dpa' | channel == 'traffic'")
+
+st.write(lw_snap_df.replace([np.inf, np.nan], '-').head())
+
+st.markdown("### AE Snapchat WoW")
+
+dif = ((tw_snap_df - lw_snap_df)/lw_snap_df)
+st.write(dif.replace([np.inf, np.nan], '-').head(6))

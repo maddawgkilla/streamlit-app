@@ -87,3 +87,87 @@ tw_tiktok_df = tw_tiktok_df.query("channel == 'apppromo' | channel == 'vsa2'")
 lw_tiktok_df = lw_tiktok_df.query("channel == 'apppromo' | channel == 'vsa2'")
 
 st.write(tw_tiktok_df.head(10))
+
+## Reinit of the main tiktok df
+
+tiktok_df = df.query("channel_group == 'tiktok'")
+
+st.markdown("### SA Tiktok This Week")
+
+tw_tiktok_df = tiktok_df.query(t_week_q).query("country == 'SA'")
+
+tw_tiktok_df = tw_tiktok_df.groupby('channel')[['Sessions', 'Costs', 'Revenue', 'Orders', 'Ad_clicks', 'Ad_impressions']].sum()
+tw_tiktok_df['CIR'] = 1/(tw_tiktok_df['Revenue']/tw_tiktok_df['Costs'])
+tw_tiktok_df['CPC'] = (tw_tiktok_df['Costs']/tw_tiktok_df['Ad_clicks'])
+tw_tiktok_df['CPS'] = (tw_tiktok_df['Costs']/tw_tiktok_df['Sessions'])
+tw_tiktok_df['CPM'] = (tw_tiktok_df['Costs']/tw_tiktok_df['Ad_impressions']) * 1000
+tw_tiktok_df['CTR'] = (tw_tiktok_df['Ad_clicks']/tw_tiktok_df['Ad_impressions'])
+tw_tiktok_df['CTS'] = (tw_tiktok_df['Sessions']/tw_tiktok_df['Ad_clicks'])
+tw_tiktok_df['CVR'] = (tw_tiktok_df['Orders']/tw_tiktok_df['Sessions'])
+
+tw_tiktok_df = tw_tiktok_df.query("channel == 'apppromo' | channel == 'vsa2'")
+
+st.write(tw_tiktok_df.replace([np.inf, np.nan], '-').head())
+
+st.markdown("### SA Tiktok Prior Week")
+
+lw_tiktok_df = tiktok_df.query(l_week_q).query("country == 'SA'")
+
+lw_tiktok_df = lw_tiktok_df.groupby('channel')[['Sessions', 'Costs', 'Revenue', 'Orders', 'Ad_clicks', 'Ad_impressions']].sum()
+lw_tiktok_df['CIR'] = 1/(lw_tiktok_df['Revenue']/lw_tiktok_df['Costs'])
+lw_tiktok_df['CPC'] = (lw_tiktok_df['Costs']/lw_tiktok_df['Ad_clicks'])
+lw_tiktok_df['CPS'] = (lw_tiktok_df['Costs']/lw_tiktok_df['Sessions'])
+lw_tiktok_df['CPM'] = (lw_tiktok_df['Costs']/lw_tiktok_df['Ad_impressions']) * 1000
+lw_tiktok_df['CTR'] = (lw_tiktok_df['Ad_clicks']/lw_tiktok_df['Ad_impressions'])
+lw_tiktok_df['CTS'] = (lw_tiktok_df['Sessions']/lw_tiktok_df['Ad_clicks'])
+lw_tiktok_df['CVR'] = (lw_tiktok_df['Orders']/lw_tiktok_df['Sessions'])
+
+lw_tiktok_df = lw_tiktok_df.query("channel == 'apppromo' | channel == 'vsa2'")
+
+st.write(lw_tiktok_df.replace([np.inf, np.nan], '-').head())
+
+st.markdown("### SA Tiktok WoW")
+
+dif = ((tw_tiktok_df - lw_tiktok_df)/lw_tiktok_df)
+st.write(dif.replace([np.inf, np.nan], '-').head(6))
+
+
+
+st.markdown("### AE Tiktok This Week")
+
+tw_tiktok_df = tiktok_df.query(t_week_q).query("country == 'AE'")
+
+tw_tiktok_df = tw_tiktok_df.groupby('channel')[['Sessions', 'Costs', 'Revenue', 'Orders', 'Ad_clicks', 'Ad_impressions']].sum()
+tw_tiktok_df['CIR'] = 1/(tw_tiktok_df['Revenue']/tw_tiktok_df['Costs'])
+tw_tiktok_df['CPC'] = (tw_tiktok_df['Costs']/tw_tiktok_df['Ad_clicks'])
+tw_tiktok_df['CPS'] = (tw_tiktok_df['Costs']/tw_tiktok_df['Sessions'])
+tw_tiktok_df['CPM'] = (tw_tiktok_df['Costs']/tw_tiktok_df['Ad_impressions']) * 1000
+tw_tiktok_df['CTR'] = (tw_tiktok_df['Ad_clicks']/tw_tiktok_df['Ad_impressions'])
+tw_tiktok_df['CTS'] = (tw_tiktok_df['Sessions']/tw_tiktok_df['Ad_clicks'])
+tw_tiktok_df['CVR'] = (tw_tiktok_df['Orders']/tw_tiktok_df['Sessions'])
+
+tw_tiktok_df = tw_tiktok_df.query("channel == 'apppromo' | channel == 'vsa2'")
+
+st.write(tw_tiktok_df.replace([np.inf, np.nan], '-').head())
+
+st.markdown("### AE Tiktok Prior Week")
+
+lw_tiktok_df = tiktok_df.query(l_week_q).query("country == 'AE'")
+
+lw_tiktok_df = lw_tiktok_df.groupby('channel')[['Sessions', 'Costs', 'Revenue', 'Orders', 'Ad_clicks', 'Ad_impressions']].sum()
+lw_tiktok_df['CIR'] = 1/(lw_tiktok_df['Revenue']/lw_tiktok_df['Costs'])
+lw_tiktok_df['CPC'] = (lw_tiktok_df['Costs']/lw_tiktok_df['Ad_clicks'])
+lw_tiktok_df['CPS'] = (lw_tiktok_df['Costs']/lw_tiktok_df['Sessions'])
+lw_tiktok_df['CPM'] = (lw_tiktok_df['Costs']/lw_tiktok_df['Ad_impressions']) * 1000
+lw_tiktok_df['CTR'] = (lw_tiktok_df['Ad_clicks']/lw_tiktok_df['Ad_impressions'])
+lw_tiktok_df['CTS'] = (lw_tiktok_df['Sessions']/lw_tiktok_df['Ad_clicks'])
+lw_tiktok_df['CVR'] = (lw_tiktok_df['Orders']/lw_tiktok_df['Sessions'])
+
+lw_tiktok_df = lw_tiktok_df.query("channel == 'apppromo' | channel == 'vsa2'")
+
+st.write(lw_tiktok_df.replace([np.inf, np.nan], '-').head())
+
+st.markdown("### AE Tiktok WoW")
+
+dif = ((tw_tiktok_df - lw_tiktok_df)/lw_tiktok_df)
+st.write(dif.replace([np.inf, np.nan], '-').head(6))
